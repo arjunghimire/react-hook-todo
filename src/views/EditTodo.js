@@ -1,25 +1,29 @@
 import Form from "../components/Form";
 import { useParams, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { TodoContext } from "../context";
 
 const EditTodo = () => {
   const params = useParams();
   const [todo, setTodo] = useState({});
   const history = useHistory();
+  const { state, dispatch } = useContext(TodoContext);
 
   useEffect(() => {
-    const todos = localStorage.getItem("todos");
-    const parseTodos = JSON.parse(todos);
+    const parseTodos = state.todos;
     const todo = parseTodos.find((t) => t.id === params.todoId);
     setTodo(todo);
   }, []);
 
-  const handleSubmit = (state) => {
-    let todo = localStorage.getItem("todos");
-    const parseTodo = todo === null ? [] : JSON.parse(todo);
+  const handleSubmit = (stateData) => {
+    const parseTodo = state.todos === null ? [] : state.todos;
     const findTodoIndex = parseTodo.findIndex((t) => t.id === params.todoId);
-    parseTodo[findTodoIndex] = state;
+    parseTodo[findTodoIndex] = stateData;
     localStorage.setItem("todos", JSON.stringify(parseTodo));
+    dispatch({
+      type: "todos",
+      payload: parseTodo,
+    });
     history.push("/");
   };
 

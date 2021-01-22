@@ -1,24 +1,23 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import PCard from "../components/Card";
+import { TodoContext } from "../context";
 
 const ListTodo = () => {
-  const [todos, setTodos] = useState([]);
-
-  useEffect(() => {
-    const todos = localStorage.getItem("todos");
-    setTodos(JSON.parse(todos));
-  }, []);
-
+  const { state, dispatch } = useContext(TodoContext);
   const handleRemove = (id) => {
-    const filterTodo = todos.filter((todo) => todo.id !== id);
+    const filterTodo = state.todos.filter((todo) => todo.id !== id);
     localStorage.setItem("todos", JSON.stringify(filterTodo));
-    setTodos(filterTodo);
+    dispatch({
+      type: "todos",
+      payload: filterTodo,
+    });
   };
+
   return (
     <div>
       <br />
-      {todos &&
-        todos.map(({ title, description, id }) => {
+      {state.todos &&
+        state.todos.map(({ title, description, id }) => {
           return (
             <div key={id}>
               <PCard

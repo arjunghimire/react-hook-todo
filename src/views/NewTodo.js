@@ -1,19 +1,24 @@
 import Form from "../components/Form";
 import uuid from "react-uuid";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { TodoContext } from "../context";
 
 const NewTodo = () => {
+  const { state, dispatch } = useContext(TodoContext);
   const history = useHistory();
-
-  const handleSubmit = (state) => {
+  const handleSubmit = (stateData) => {
     const data = {
-      ...state,
+      ...stateData,
       id: uuid(),
     };
-    let todo = localStorage.getItem("todos");
-    const parseTodo = todo === null ? [] : JSON.parse(todo);
+    const parseTodo = state.todos === null ? [] : state.todos;
     const sendData = [data, ...parseTodo];
     localStorage.setItem("todos", JSON.stringify(sendData));
+    dispatch({
+      type: "todos",
+      payload: sendData,
+    });
     history.push("/");
   };
   return (
