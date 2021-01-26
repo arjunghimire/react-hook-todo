@@ -3,9 +3,12 @@ import uuid from "react-uuid";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { TodoContext } from "../context";
+import { DataContext } from "../context/context";
 
 const NewTodo = () => {
   const { state, dispatch } = useContext(TodoContext);
+  const contextValue = useContext(DataContext);
+  console.log("NEEEEE", contextValue);
   const history = useHistory();
   const handleSubmit = (stateData) => {
     const data = {

@@ -6,6 +6,7 @@ import ViewTodo from "./views/ViewTodo";
 import EditTodo from "./views/EditTodo";
 import NoMatch from "./views/NoMatch";
 import Navbar from "./components/Navbar";
+import DataContextProvider from "./context/context";
 
 function App() {
   return (

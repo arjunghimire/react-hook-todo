@@ -10,7 +10,6 @@ const TodoContextProvider = ({ children }) => {
     const todos = localStorage.getItem("todos");
     dispatch({ type: "todos", payload: JSON.parse(todos) });
   }, []);
-  console.log("FUCCCCCCCC", state);
   return (
     <TodoContext.Provider
       value={{
